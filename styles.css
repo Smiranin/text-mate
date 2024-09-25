@@ -1,0 +1,27 @@
+#grammarIcon {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+}
+
+#grammarIcon::before {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url('icon16.png') no-repeat center center;
+}
+
+#grammarDropdown {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    z-index: 1000;
+}

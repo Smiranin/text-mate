@@ -1,0 +1,40 @@
+{
+    "manifest_version": 3,
+    "name": "Text Mate",
+    "version": "1.0",
+    "description": "Check and fix grammar in selected text.",
+    "permissions": [
+        "activeTab",
+        "storage",
+        "contextMenus",
+        "scripting"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "icon16.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "css": [
+                "styles.css"
+            ]
+        }
+    ],
+    "icons": {
+        "16": "icon16.png",
+        "64": "icon64.png",
+        "128": "icon128.png"
+    }
+}
