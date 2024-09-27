@@ -1,4 +1,5 @@
-let grammarIcon;
+let rootEl;
+let dropdown;
 //TODO: Check Event model
 document.addEventListener('selectionchange', function () {
     let test = window.getSelection();
@@ -13,33 +14,29 @@ document.addEventListener('selectionchange', function () {
 });
 
 function showGrammarIcon(rect) {
-    if (grammarIcon) grammarIcon.remove();
+    if (rootEl) rootEl.remove();
 
-    grammarIcon = document.createElement('div');
-    grammarIcon.id = 'grammarIcon';
-    grammarIcon.style.left = `${rect.right + window.scrollX + 10}px`;
-    grammarIcon.style.top = `${rect.top + window.scrollY}px`;
-    document.body.appendChild(grammarIcon);
+    rootEl = document.createElement('div');
+    rootEl.id = 'grammarIcon';
+    rootEl.style.left = `${rect.right + window.scrollX + 10}px`;
+    rootEl.style.top = `${rect.top + window.scrollY}px`;
+    document.body.appendChild(rootEl);
 
-    debugger;
-    grammarIcon.addEventListener('click', showDropdown);
+    rootEl.addEventListener('click', showDropdown);
 }
 
 function showDropdown() {
-    debugger;
-    const dropdown = document.createElement('div');
+    dropdown = document.createElement('div');
     dropdown.id = 'grammarDropdown';
     dropdown.style.position = 'absolute';
-    dropdown.style.left = grammarIcon.style.left;
-    dropdown.style.top = `${parseInt(grammarIcon.style.top) + 30}px`;
+    dropdown.style.left = rootEl.style.left;
+    dropdown.style.top = `${parseInt(rootEl.style.top) + 30}px`;
     dropdown.style.background = '#fff';
     dropdown.style.border = '1px solid #ccc';
     dropdown.style.padding = '5px';
+    fixOption.innerText = 'Fix Grammar';
 
     const fixOption = document.createElement('div');
-    fixOption.innerText = 'Fix Grammar';
-    fixOption.style.cursor = 'pointer';
-    fixOption.style.color = 'red';
     fixOption.addEventListener('click', () => fixGrammar(window.getSelection().toString().trim()));
 
     dropdown.appendChild(fixOption);
@@ -54,6 +51,16 @@ function showDropdown() {
 
     debugger;
 }
+
+function handleOutsideClick(event) {
+    const tartget = event.target;
+    if (!dropdown.contains(event.target)) {
+        dropdown.remove();
+        document.removeEventListener('click', handler);
+    }
+}
+
+function cleanUp() { }
 
 function fixGrammar(selectedText) {
     replaceSelectedText("Test Text");

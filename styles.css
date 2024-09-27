@@ -1,9 +1,10 @@
 #grammarIcon {
     position: absolute;
-    width: 64px;
-    height: 64px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    background: white;
+    background: rgb(255, 255, 255);
+    border: 1px solid #000;
     cursor: pointer;
 }
 
@@ -24,4 +25,5 @@
     border: 1px solid #ccc;
     padding: 5px;
     z-index: 1000;
+    color: red;
 }
