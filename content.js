@@ -30,7 +30,7 @@ function cleanUp() {
 }
 
 
-document.addEventListener('keydown', function (event) {
+document.addEventListener('keydown', async function (event) {
     if (!(event.altKey && event.shiftKey && event.key === 'F')) return;
 
     const selectedText = window.getSelection().toString().trim();
@@ -38,7 +38,26 @@ document.addEventListener('keydown', function (event) {
 
         const rect = window.getSelection().getRangeAt(0).getBoundingClientRect();
         currentText = selectedText;
-        contentEl.textContent = selectedText;
+
+        try {
+            const response = await fetch('http://localhost:5000/correct-grammar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: selectedText }),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            const data = await response.json();
+            contentEl.textContent = data.corrected;
+        } catch (error) {
+            debugger;
+            contentEl.textContent = "Cathc it";
+        }
         showLauncher(rect);
     }
 });
